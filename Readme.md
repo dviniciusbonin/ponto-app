@@ -26,6 +26,6 @@ Entrada, saída para intervalo, retorno e saída.
 | :---------- | :--------- | 
 | Terminar layout | 12/05 
 | Integração com backend | 23/05
-| Concluir projetto | 30/05 
+| Concluir projeto | 30/05 
 
 
