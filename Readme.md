@@ -19,6 +19,8 @@ Entrada, saída para intervalo, retorno e saída.
 
 ## Layout
 
+https://www.figma.com/file/bhqRaHogY31tTUbduMrlh8/Ponto-App?node-id=11%3A57
+
 ## Cronograma
 
 
