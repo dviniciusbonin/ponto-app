@@ -2,6 +2,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { Image } from "react-native";
 import { LoginForm } from "./components/LoginForm";
+import SvgComponent from "./components/Logo";
 import { useAUth } from "./contexts/AuthContext";
 import { HomePage } from "./pages/HomePage";
 import { PointsListPage } from "./pages/PointsListPage";
@@ -23,7 +24,7 @@ export default function Routes() {
               backgroundColor: "#02073D",
             },
             headerTitle: () => (
-              <Image style={{}} source={require("../assets/logo.png")} />
+             <SvgComponent />
             ),
           }}
         >
