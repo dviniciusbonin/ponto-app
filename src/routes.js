@@ -1,4 +1,9 @@
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { Image } from "react-native";
 import { LoginForm } from "./components/LoginForm";
@@ -7,12 +12,25 @@ import { useAUth } from "./contexts/AuthContext";
 import { HomePage } from "./pages/HomePage";
 import { PointsListPage } from "./pages/PointsListPage";
 
+function CustomDrawerContent(props) {
+  const {logout} = useAUth();
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem
+        label="Sair"
+        onPress={() => logout()}
+      />
+    </DrawerContentScrollView>
+  );
+}
+
 const Drawer = createDrawerNavigator();
 export default function Routes() {
-    const {logged} = useAUth();
+  const { logged } = useAUth();
   return (
-      <NavigationContainer>
-        {
+    <NavigationContainer>
+      {
             logged ? 
             <Drawer.Navigator
           initialRouteName="Home"
@@ -27,6 +45,7 @@ export default function Routes() {
              <SvgComponent />
             ),
           }}
+          drawerContent={(props) => <CustomDrawerContent {...props} />}
         >
           <Drawer.Screen
             options={{
@@ -45,6 +64,6 @@ export default function Routes() {
         </Drawer.Navigator>:
         <LoginForm />
         }
-      </NavigationContainer>
+    </NavigationContainer>
   );
 }
