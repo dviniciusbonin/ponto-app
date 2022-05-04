@@ -31,7 +31,7 @@ export function LoginForm({ onSubmit }) {
           <Text style={styles.submitText}>Entrar</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => alert("redirect create user page")}>
-          <Text style={styles.textRegister}>Sou novo aqui</Text>
+          <Text style={styles.textRegister}>Sou novo aqui ?</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
