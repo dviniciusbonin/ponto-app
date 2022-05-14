@@ -10,7 +10,7 @@ import { LoginForm } from "./components/LoginForm";
 import SvgComponent from "./components/Logo";
 import { useAUth } from "./contexts/AuthContext";
 import { HomePage } from "./pages/HomePage";
-import { PointsListPage } from "./pages/PointsListPage";
+import { WorkingDaysPage } from "./pages/WorkingDaysPage";
 
 function CustomDrawerContent(props) {
   const {logout} = useAUth();
@@ -59,7 +59,7 @@ export default function Routes() {
               title: "Histórico de pontos"
           }}
             name="listPoints"
-            component={PointsListPage}
+            component={WorkingDaysPage}
           />
         </Drawer.Navigator>:
         <LoginForm />

@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet} from 'react-native';
 
-export function PointItem({item}) {
+export function DayWorkedItem({item}) {
     return(
         <View style={styles.container}>
             <Text>
