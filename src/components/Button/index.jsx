@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, Text} from 'react-native';
 
-export function Button({title, color}) {
+export function Button({title, color, action}) {
     return(
         <View>
             <TouchableOpacity style={{
@@ -8,7 +8,7 @@ export function Button({title, color}) {
                 width: '100%',
                 paddingHorizontal: 25,
                 paddingVertical: 10
-            }}>
+            }} onPress={action}>
                 <Text style={{
                     color:'#FFFFFF',
                     fontWeight: 'bold',

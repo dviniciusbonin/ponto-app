@@ -35,8 +35,8 @@ export function HomePage() {
             </View>
 
             <View style={styles.buttons}>
-                <Button title='Entrar' color='#2AA855'/>
-                <Button title='Sair' color='#FF5757'/>
+                <Button title='Entrar' color='#2AA855' action={() => alert('Ponto registrado')}/>
+                <Button title='Sair' color='#FF5757' action={() => alert('Ponto de saida registrado')}/>
             </View>
 
 
