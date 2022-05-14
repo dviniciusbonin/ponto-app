@@ -38,3 +38,17 @@ export const formatCurrentMonth = (currenMonth) => {
     return `${months[parseInt(month) - 1]} de ${year}`;
 
 }
+
+const weekDays = {
+    0: 'Domingo',
+    1: 'Segunda',
+    2: 'Terça',
+    3: 'Quarta',
+    4: 'Quinta',
+    5: 'Sexta',
+    6: 'Sábado'
+} 
+
+export const formatCurrentDay = (date) => {
+   return weekDays[date.getDay()];
+}
