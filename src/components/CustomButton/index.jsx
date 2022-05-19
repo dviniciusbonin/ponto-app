@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, Text} from 'react-native';
 
-export function Button({title, color, action}) {
+export function CustomButton({title, color, action}) {
     return(
         <View>
             <TouchableOpacity style={{
