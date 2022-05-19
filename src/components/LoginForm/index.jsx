@@ -10,8 +10,10 @@ import {
 } from "react-native";
 import { useAUth } from "../../contexts/AuthContext";
 import SvgComponent from "../Logo";
+import { CommonActions } from '@react-navigation/native';
 
-export function LoginForm({ onSubmit }) {
+
+export function LoginForm({ onSubmit, onRegister }) {
   const { login } = useAUth();
   const handleLogin = async () => {
     login("aa", "aa");
@@ -30,7 +32,7 @@ export function LoginForm({ onSubmit }) {
         <TouchableOpacity style={styles.submit} onPress={handleLogin}>
           <Text style={styles.submitText}>Entrar</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert("redirect create user page")}>
+        <TouchableOpacity onPress={() => onRegister()}>
           <Text style={styles.textRegister}>Sou novo aqui ?</Text>
         </TouchableOpacity>
       </View>

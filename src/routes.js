@@ -4,13 +4,14 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from "@react-navigation/native";
-import { Image } from "react-native";
-import { LoginForm } from "./components/LoginForm";
 import SvgComponent from "./components/Logo";
 import { useAUth } from "./contexts/AuthContext";
 import { HomePage } from "./pages/HomePage";
 import { WorkingDaysPage } from "./pages/WorkingDaysPage";
+import { LoginPage } from "./pages/LoginPage";
+import { RegistrationPage } from "./pages/RegistrationPage";
 
 function CustomDrawerContent(props) {
   const {logout} = useAUth();
@@ -26,6 +27,7 @@ function CustomDrawerContent(props) {
 }
 
 const Drawer = createDrawerNavigator();
+const NativeStack = createNativeStackNavigator();
 export default function Routes() {
   const { logged } = useAUth();
   return (
@@ -62,7 +64,15 @@ export default function Routes() {
             component={WorkingDaysPage}
           />
         </Drawer.Navigator>:
-        <LoginForm />
+       <NativeStack.Navigator screenOptions={{
+            headerTitle: '',
+            headerTransparent: true,
+            headerTintColor: '#0057FF',
+            animation: "fade_from_bottom",
+          }}>
+        <NativeStack.Screen name="login" component={LoginPage} />
+        <NativeStack.Screen name="register" component={RegistrationPage} />
+      </NativeStack.Navigator>
         }
     </NavigationContainer>
   );
