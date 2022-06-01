@@ -52,3 +52,8 @@ const weekDays = {
 export const formatCurrentDay = (date) => {
    return weekDays[date.getDay()];
 }
+
+export const formatHour = (date) => {
+
+    return '00:00';
+}
