@@ -25,13 +25,17 @@ export function AuthProvider({ children }) {
             await AsyncStorage.setItem('token', data.access_token);
 
         } catch (error) {
-            console.log(error)
-            throw new Error('Email ou senha incorretos!');
+            alert('Email ou senha incorretos!');
         }
     }
 
     async function logout() {
-        setUser(null)
+        try {
+            setUser(null)
+            await AsyncStorage.removeItem('token');
+        } catch (error) {
+            throw new Error('Token not found');
+        }
     }
 
     const load = async () => {

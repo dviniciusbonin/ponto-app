@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -16,7 +16,16 @@ export function LoginForm({ onSubmit, onRegister }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    return () => {
+      setLoading('');
+      setEmail('');
+      setPassword('');
+    };
+  }, []);
+
   const { login } = useAUth();
+
   const handleLogin = async () => {
     if (email.length < 1 || password.length < 1) {
       alert('Todos os campos são obrigatórios!')
@@ -24,6 +33,10 @@ export function LoginForm({ onSubmit, onRegister }) {
     } else {
       setLoading(true);
       await login(email, password);
+      setLoading(false);
+      setLoading('');
+      setEmail('');
+      setPassword('');
     }
   };
   return (
