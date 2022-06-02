@@ -29,6 +29,14 @@ export const formatDate = (date) => {
     return `${addZeroToDate(day)}/${addZeroToDate(month)}/${year}`;
 }
 
+export const formatDateTime = (date) => {
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    return `${year}-${addZeroToDate(month)}-${addZeroToDate(day)}`;
+}
+
 const addZeroToDate = n => n < 10 ? `0${n}` : n.toString();
 
 export const formatCurrentMonth = (currenMonth) => {
@@ -51,4 +59,9 @@ const weekDays = {
 
 export const formatCurrentDay = (date) => {
    return weekDays[date.getDay()];
+}
+
+export const formatHour = (date) => {
+
+    return date;
 }

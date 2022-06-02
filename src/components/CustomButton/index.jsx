@@ -1,6 +1,10 @@
 import { View, TouchableOpacity, Text} from 'react-native';
 
 export function CustomButton({title, color, action}) {
+    const handleAction = async() => {
+        action();
+    }
+
     return(
         <View>
             <TouchableOpacity style={{
@@ -8,7 +12,7 @@ export function CustomButton({title, color, action}) {
                 width: '100%',
                 paddingHorizontal: 25,
                 paddingVertical: 10
-            }} onPress={action}>
+            }} onPress={handleAction}>
                 <Text style={{
                     color:'#FFFFFF',
                     fontWeight: 'bold',
