@@ -24,6 +24,12 @@ export function RegistrationPage({ navigation }) {
     })
   }, []);
 
+  useEffect(() => {
+    return () => {
+      setCompanySelected({});
+    };
+}, []);
+
   const handleRegister = () => {
     if (name.length < 3 || email.length < 5 || password.length < 3) {
       return alert('Todos os campos precisam de no minimo 3 caracteres');
@@ -57,7 +63,7 @@ export function RegistrationPage({ navigation }) {
         <TextInput style={styles.input} placeholder="Nome" onChange={(e) => setName(e.nativeEvent.text)} />
         <TextInput style={styles.input} placeholder="Empresa" value={companySelected.name} focusable={false} />
         <TextInput style={styles.input} placeholder="Email" onChange={(e) => setEmail(e.nativeEvent.text)} />
-        <TextInput style={styles.input} placeholder="Senha" onChange={(e) => setPassword(e.nativeEvent.text)} />
+        <TextInput style={styles.input} placeholder="Senha" onChange={(e) => setPassword(e.nativeEvent.text)} secureTextEntry/>
         <TouchableOpacity style={styles.submit} onPress={handleRegister}>
           <Text style={styles.submitText}>Salvar</Text>
         </TouchableOpacity>

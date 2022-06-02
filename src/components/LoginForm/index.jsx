@@ -46,7 +46,7 @@ export function LoginForm({ onSubmit, onRegister }) {
       </View>
       <View style={styles.formContainer}>
         <TextInput style={styles.input} placeholder="Login" onChange={(e) => setEmail(e.nativeEvent.text)} />
-        <TextInput style={styles.input} placeholder="Senha" onChange={(e) => setPassword(e.nativeEvent.text)} />
+        <TextInput style={styles.input} placeholder="Senha" onChange={(e) => setPassword(e.nativeEvent.text)} secureTextEntry />
         <TouchableOpacity style={styles.submit} onPress={handleLogin}>
           <Text style={styles.submitText}>{!loading ? 'Entrar' : 'Entrando ...'}</Text>
         </TouchableOpacity>
