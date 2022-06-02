@@ -1,36 +1,56 @@
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   TextInput,
-  Image,
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
 import { useAUth } from "../../contexts/AuthContext";
 import SvgComponent from "../Logo";
 
-export function LoginForm({ onSubmit }) {
+
+export function LoginForm({ onSubmit, onRegister }) {
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    return () => {
+      setLoading('');
+      setEmail('');
+      setPassword('');
+    };
+  }, []);
+
   const { login } = useAUth();
+
   const handleLogin = async () => {
-    login("aa", "aa");
+    if (email.length < 1 || password.length < 1) {
+      alert('Todos os campos são obrigatórios!')
+      setLoading(false);
+    } else {
+      setLoading(true);
+      await login(email, password);
+      setLoading(false);
+      setLoading('');
+      setEmail('');
+      setPassword('');
+    }
   };
   return (
     <KeyboardAvoidingView style={styles.container}>
-      {/*<View style={styles.logoContainer}>
-        <Image style={styles.logoContainer} source={require("../../../assets/logo.png")} />
-  </View>*/}
       <View style={styles.logoContainer}>
         <SvgComponent />
       </View>
       <View style={styles.formContainer}>
-        <TextInput style={styles.input} placeholder="Login" />
-        <TextInput style={styles.input} placeholder="Senha" />
+        <TextInput style={styles.input} placeholder="Login" onChange={(e) => setEmail(e.nativeEvent.text)} />
+        <TextInput style={styles.input} placeholder="Senha" onChange={(e) => setPassword(e.nativeEvent.text)} secureTextEntry />
         <TouchableOpacity style={styles.submit} onPress={handleLogin}>
-          <Text style={styles.submitText}>Entrar</Text>
+          <Text style={styles.submitText}>{!loading ? 'Entrar' : 'Entrando ...'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert("redirect create user page")}>
+        <TouchableOpacity onPress={() => onRegister()}>
           <Text style={styles.textRegister}>Sou novo aqui ?</Text>
         </TouchableOpacity>
       </View>

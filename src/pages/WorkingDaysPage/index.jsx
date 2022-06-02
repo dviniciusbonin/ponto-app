@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { PointItem } from "../../components/PointItem";
+import { DayWorkedItem } from "../../components/DayWorkedItem";
 
 const data = [
     {   
@@ -35,14 +35,14 @@ const data = [
     
 ]
 
-export function PointsListPage() {
+export function WorkingDaysPage() {
   return (
     <View style={styles.containter}>
         <Text style={styles.textInfo}>Horas trabalhadas no mês - 148 horas</Text>
         <Text style={styles.title}>Dias trabalhados</Text>
       <FlatList
         data={data}
-        renderItem={PointItem}
+        renderItem={DayWorkedItem}
         keyExtractor={(item) => item.id}
       />
     </View>
