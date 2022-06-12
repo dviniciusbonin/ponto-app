@@ -113,7 +113,8 @@ const styles = StyleSheet.create({
     },
     main: {
         width: '100%',
-        flex: 1
+        minHeight: "60%",
+        flex: 0
     },
     title: {
         textAlign: 'center',

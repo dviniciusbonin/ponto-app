@@ -60,7 +60,7 @@ export function RegistrationPage({ navigation }) {
         <SvgComponent />
       </View>
       <Text style={styles.title}>Registre-se</Text>
-      <ScrollView style={styles.formContainer} contentContainerStyle={styles.containerScrollView} focusable>
+      <ScrollView style={styles.formContainer} contentContainerStyle={styles.containerScrollView} showsVerticalScrollIndicator focusable>
         <TextInput style={styles.input} placeholder="Nome" onChange={(e) => setName(e.nativeEvent.text)} />
         <TextInput style={styles.input} placeholder="Empresa" value={companySelected.name} focusable={false} />
         <TextInput style={styles.input} placeholder="Email" onChange={(e) => setEmail(e.nativeEvent.text)} />
