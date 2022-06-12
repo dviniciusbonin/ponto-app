@@ -5,7 +5,8 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
-  Alert
+  Alert,
+  ScrollView
 } from "react-native";
 import { useEffect, useState } from "react";
 import SvgComponent from "../../components/Logo";
@@ -59,7 +60,7 @@ export function RegistrationPage({ navigation }) {
         <SvgComponent />
       </View>
       <Text style={styles.title}>Registre-se</Text>
-      <View style={styles.formContainer}>
+      <ScrollView style={styles.formContainer} contentContainerStyle={styles.containerScrollView} focusable>
         <TextInput style={styles.input} placeholder="Nome" onChange={(e) => setName(e.nativeEvent.text)} />
         <TextInput style={styles.input} placeholder="Empresa" value={companySelected.name} focusable={false} />
         <TextInput style={styles.input} placeholder="Email" onChange={(e) => setEmail(e.nativeEvent.text)} />
@@ -67,7 +68,7 @@ export function RegistrationPage({ navigation }) {
         <TouchableOpacity style={styles.submit} onPress={handleRegister}>
           <Text style={styles.submitText}>Salvar</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
@@ -75,11 +76,12 @@ export function RegistrationPage({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center"
   },
   title: {
     textAlign: 'center',
-    marginVertical: 50,
+    marginVertical: 15,
     fontWeight: "bold",
     fontSize: 16
   },
@@ -94,10 +96,11 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   formContainer: {
-    flex: 1,
-    alignItems: "center",
     width: '80%',
-    margin: 0
+    margin: 10
+  },
+  containerScrollView: {
+    alignItems: "center"
   },
   input: {
     backgroundColor: "#fff",
