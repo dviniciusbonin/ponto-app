@@ -7,7 +7,7 @@ export function DayWorkedItem({item}) {
                 {item.date}
             </Text>
             <Text style={styles.hours}>
-                {item.hours} horas trabalhadas
+                {item.total} horas trabalhadas
             </Text>
         </View>
     )

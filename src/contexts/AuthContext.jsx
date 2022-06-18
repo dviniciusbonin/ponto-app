@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
             await AsyncStorage.setItem('token', data.access_token);
 
         } catch (error) {
-            alert('Email ou senha incorretos!');
+            throw new Error('Email ou senha incorretos!');
         }
     }
 

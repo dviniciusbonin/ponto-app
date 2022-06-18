@@ -3,28 +3,33 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import { CustomButton } from '../../components/CustomButton';
 import { PointItem } from '../../components/PointItem';
-import { formatCurrentDay, formatDate, formatDateTime} from '../../helpers/date';
+import { useAUth } from "../../contexts/AuthContext";
+import { formatCurrentDay, formatDate, formatDateTime } from '../../helpers/date';
 import { formatPointType } from "../../helpers/point.dictionary";
 import api from "../../services/api";
 export function HomePage() {
-
+    const { logout } = useAUth();
     const today = new Date();
     const [points, setPoints] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const date = formatDateTime(new Date());
-        api.get(`points?date=${date}`).then(({ data }) => setPoints(data)).finally(() => setLoading(false))
+        api.get(`points?date=${date}`).then(({ data }) => setPoints(data)).catch(err => {
+            if (err.response.status === 401) {
+                logout()
+            }
+        }).finally(() => setLoading(false))
     }, [points]);
 
     useEffect(() => {
         return () => {
-          setPoints([]);
+            setPoints([]);
         };
     }, []);
 
     const handleExitPoint = async () => {
-        if(points.length == 4)
+        if (points.length == 4)
             return alert('Já foi registrado o máximo de entradas e saídas possíveis!')
 
         const result = points.find(point => point.type == 'RETURN');
@@ -33,12 +38,12 @@ export function HomePage() {
             type: result ? 'EXIT' : 'INTERVAL'
         }).then((res) => {
             alert('Ponto de saída registrado!')
-           setPoints([])
-        }).catch(error => console.log({error}))
+            setPoints([])
+        }).catch(error => console.log({ error }))
     }
 
     const handleEntryPoint = () => {
-        if(points.length == 4)
+        if (points.length == 4)
             return alert('Já foi registrado o máximo de entradas e saídas possíveis!')
 
         const result = points.find(point => point.type == 'INTERVAL');
@@ -48,7 +53,7 @@ export function HomePage() {
         }).then((res) => {
             alert('Ponto de entrada registrado!')
             setPoints([])
-        }).catch(error => console.log({error}))
+        }).catch(error => console.log({ error }))
 
     }
 
@@ -88,7 +93,7 @@ export function HomePage() {
                         : points.map(point => {
                             const date = moment.tz(point.created_at, "America/Sao_Paulo");
                             return <PointItem key={point.id} item={{
-                                created_at: `${date.hours() + 3}:${date.minutes()}`,
+                                created_at: `${date.hours() + 3}:${date.minutes() < 10 ? `0${date.minutes()}` : date.minutes()}`,
                                 type: formatPointType(point.type)
                             }} />
                         })

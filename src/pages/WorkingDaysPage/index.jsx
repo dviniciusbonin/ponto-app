@@ -1,49 +1,32 @@
 import { View, Text, StyleSheet, FlatList } from "react-native";
+import { useEffect, useState } from "react";
 import { DayWorkedItem } from "../../components/DayWorkedItem";
-
-const data = [
-    {   
-        id: 1,
-        date: '20/03/2022',
-        hours: 40
-    },
-
-    {   
-        id: 2,
-        date: '20/03/2022',
-        hours: 10
-    },
-
-    {   
-        id: 3,
-        date: '20/03/2022',
-        hours: 40
-    },
-
-    {   
-        id: 4,
-        date: '20/03/2022',
-        hours: 50
-    },
-
-    {   
-        id: 5,
-        date: '20/03/2022',
-        hours: 8
-    },
-
-    
-]
+import api from "../../services/api";
+import {useAUth} from '../../contexts/AuthContext';
 
 export function WorkingDaysPage() {
+    const {logout} = useAUth();
+    const [workedDays, setWorkedDays] = useState([]);
+
+    useEffect(() => {
+        const today = new Date();
+        const month = today.getMonth() + 1;
+        api.get(`worked-days?month=${month}`).then(res => setWorkedDays(res.data)).catch(err => {
+            if(err.response.status === 401) {
+                logout()
+            }
+        })
+    }, []);
+    
+    
   return (
     <View style={styles.containter}>
-        <Text style={styles.textInfo}>Horas trabalhadas no mês - 148 horas</Text>
+        <Text style={styles.textInfo}>Horas trabalhadas no mês - {workedDays.reduce((previousValue, currentValue) => previousValue + currentValue.total, 0)} </Text>
         <Text style={styles.title}>Dias trabalhados</Text>
       <FlatList
-        data={data}
+        data={workedDays}
         renderItem={DayWorkedItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.date}
       />
     </View>
   );
