@@ -32,11 +32,15 @@ export function LoginForm({ onSubmit, onRegister }) {
       setLoading(false);
     } else {
       setLoading(true);
-      await login(email, password);
-      setLoading(false);
-      setLoading('');
-      setEmail('');
-      setPassword('');
+      login(email, password).then(() => {
+        setEmail('');
+        setPassword('');
+      }).catch(err => {
+        alert(err.message);
+        setPassword('')
+      }).finally(() => {
+        setLoading(false);
+      })
     }
   };
   return (
@@ -45,8 +49,8 @@ export function LoginForm({ onSubmit, onRegister }) {
         <SvgComponent />
       </View>
       <View style={styles.formContainer}>
-        <TextInput style={styles.input} placeholder="Login" onChange={(e) => setEmail(e.nativeEvent.text)} />
-        <TextInput style={styles.input} placeholder="Senha" onChange={(e) => setPassword(e.nativeEvent.text)} secureTextEntry />
+        <TextInput style={styles.input} placeholder="Login" onChange={(e) => setEmail(e.nativeEvent.text)} value={email}/>
+        <TextInput style={styles.input} placeholder="Senha" onChange={(e) => setPassword(e.nativeEvent.text)} value={password} secureTextEntry />
         <TouchableOpacity style={styles.submit} onPress={handleLogin}>
           <Text style={styles.submitText}>{!loading ? 'Entrar' : 'Entrando ...'}</Text>
         </TouchableOpacity>
