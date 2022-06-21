@@ -23,9 +23,8 @@ import {
       // check for auth
       const result = await authenticateAsync({
         promptMessage: 'Confirme com sua biometria',
-        cancelLabel: 'Cancel',
-        disableDeviceFallback: true,
-        fallbackLabel: 'Cancelar'
+        cancelLabel: 'Cancelar',
+        disableDeviceFallback: true
       });
 
       if(!result.success) {
