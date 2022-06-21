@@ -37,7 +37,7 @@ export function HomePage() {
         const result = points.find(point => point.type == 'RETURN');
 
         authorize().then((res) => {
-            if (res) {
+            if (res.success) {
                 api.post('points', {
                     type: result ? 'EXIT' : 'INTERVAL'
                 }).then((res) => {
@@ -55,7 +55,7 @@ export function HomePage() {
 
         const result = points.find(point => point.type == 'INTERVAL');
         authorize().then(res => {
-            if (res) {
+            if (res.success) {
                 api.post('points', {
                     type: result ? 'RETURN' : 'ENTRY'
                 }).then((res) => {
