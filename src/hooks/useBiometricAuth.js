@@ -1,3 +1,9 @@
+import { LogBox } from "react-native";
+
+// Refact 
+LogBox.ignoreLogs(["Fingerprint operation canceled by user."]);
+LogBox.ignoreLogs(["Cancelar"]);
+
 import {
     authenticateAsync,
     hasHardwareAsync,
@@ -18,7 +24,7 @@ import {
   
     const authorize = async () => {
       // device is not compatible or user has not registered biometrics
-      if (!isEnrolled) return false;
+      if (!isEnrolled || !isCompatible ) return false;
   
       // check for auth
       const result = await authenticateAsync({
