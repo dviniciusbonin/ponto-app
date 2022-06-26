@@ -33,7 +33,7 @@ export function HomePage() {
 
     const handleExitPoint = async () => {
         if (points.length == 4)
-            return alert('Já foi registrado o máximo de entradas e saídas possíveis!')
+            return alert(i18n.t('validatePointsMsg'))
 
         const result = points.find(point => point.type == 'RETURN');
 
@@ -52,7 +52,7 @@ export function HomePage() {
 
     const handleEntryPoint = async () => {
         if (points.length == 4)
-            return alert('Já foi registrado o máximo de entradas e saídas possíveis!')
+            return alert(i18n.t('validatePointsMsg'))
 
         const result = points.find(point => point.type == 'INTERVAL');
         authorize().then(res => {
