@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { DayWorkedItem } from "../../components/DayWorkedItem";
 import api from "../../services/api";
 import {useAUth} from '../../contexts/AuthContext';
+import i18n from "../../config/locale";
 
 export function WorkingDaysPage() {
     const {logout} = useAUth();
@@ -21,8 +22,8 @@ export function WorkingDaysPage() {
     
   return (
     <View style={styles.containter}>
-        <Text style={styles.textInfo}>Horas trabalhadas no mês - {workedDays.reduce((previousValue, currentValue) => previousValue + currentValue.total, 0)} </Text>
-        <Text style={styles.title}>Dias trabalhados</Text>
+        <Text style={styles.textInfo}>{i18n.t('workedDaysDescription')} - {workedDays.reduce((previousValue, currentValue) => previousValue + currentValue.total, 0)} </Text>
+        <Text style={styles.title}>{i18n.t('workedDays')}</Text>
       <FlatList
         data={workedDays}
         renderItem={DayWorkedItem}

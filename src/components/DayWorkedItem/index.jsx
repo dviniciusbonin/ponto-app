@@ -1,4 +1,5 @@
 import {View, Text, StyleSheet} from 'react-native';
+import i18n from '../../config/locale';
 
 export function DayWorkedItem({item}) {
     return(
@@ -7,7 +8,7 @@ export function DayWorkedItem({item}) {
                 {item.date}
             </Text>
             <Text style={styles.hours}>
-                {item.total} horas trabalhadas
+                {item.total} {i18n.t('hoursWorked')}
             </Text>
         </View>
     )

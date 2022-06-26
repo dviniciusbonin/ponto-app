@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import { CustomButton } from '../../components/CustomButton';
 import { PointItem } from '../../components/PointItem';
+import i18n from "../../config/locale";
 import { useAUth } from "../../contexts/AuthContext";
 import { formatCurrentDay, formatDate, formatDateTime } from '../../helpers/date';
 import { formatPointType } from "../../helpers/point.dictionary";
@@ -41,7 +42,7 @@ export function HomePage() {
                 api.post('points', {
                     type: result ? 'EXIT' : 'INTERVAL'
                 }).then((res) => {
-                    alert('Ponto de saída registrado!')
+                    alert(i18n.t('registeredExitPoint'))
                     setPoints([])
                 }).catch(error => console.log({ error }))
             }
@@ -59,7 +60,7 @@ export function HomePage() {
                 api.post('points', {
                     type: result ? 'RETURN' : 'ENTRY'
                 }).then((res) => {
-                    alert('Ponto de entrada registrado!')
+                    alert(i18n.t('registeredEntryPoint'))
                     setPoints([])
                 }).catch(error => console.log({ error }))
             }
@@ -68,7 +69,7 @@ export function HomePage() {
 
     return loading ? (
         <View style={styles.container}>
-            <Text>Carregando ...</Text>
+            <Text>{i18n.t('loading')} ...</Text>
         </View>
     ) : (
         <View style={styles.container}>
@@ -111,8 +112,8 @@ export function HomePage() {
             </View>
 
             <View style={styles.buttons}>
-                <CustomButton title='Entrar' color='#2AA855' action={handleEntryPoint} />
-                <CustomButton title='Sair' color='#FF5757' action={handleExitPoint} />
+                <CustomButton title={i18n.t('enterToWork')} color='#2AA855' action={handleEntryPoint} />
+                <CustomButton title={i18n.t('leaveWork')} color='#FF5757' action={handleExitPoint} />
             </View>
         </View>
     )
