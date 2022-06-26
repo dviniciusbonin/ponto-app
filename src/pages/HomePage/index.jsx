@@ -6,9 +6,11 @@ import { PointItem } from '../../components/PointItem';
 import { useAUth } from "../../contexts/AuthContext";
 import { formatCurrentDay, formatDate, formatDateTime } from '../../helpers/date';
 import { formatPointType } from "../../helpers/point.dictionary";
+import useBiometricAuth from "../../hooks/useBiometricAuth";
 import api from "../../services/api";
 export function HomePage() {
     const { logout } = useAUth();
+    const { authorize } = useBiometricAuth();
     const today = new Date();
     const [points, setPoints] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -34,27 +36,34 @@ export function HomePage() {
 
         const result = points.find(point => point.type == 'RETURN');
 
-        api.post('points', {
-            type: result ? 'EXIT' : 'INTERVAL'
-        }).then((res) => {
-            alert('Ponto de saída registrado!')
-            setPoints([])
-        }).catch(error => console.log({ error }))
+        authorize().then((res) => {
+            if (res.success) {
+                api.post('points', {
+                    type: result ? 'EXIT' : 'INTERVAL'
+                }).then((res) => {
+                    alert('Ponto de saída registrado!')
+                    setPoints([])
+                }).catch(error => console.log({ error }))
+            }
+        })
+
     }
 
-    const handleEntryPoint = () => {
+    const handleEntryPoint = async () => {
         if (points.length == 4)
             return alert('Já foi registrado o máximo de entradas e saídas possíveis!')
 
         const result = points.find(point => point.type == 'INTERVAL');
-
-        api.post('points', {
-            type: result ? 'RETURN' : 'ENTRY'
-        }).then((res) => {
-            alert('Ponto de entrada registrado!')
-            setPoints([])
-        }).catch(error => console.log({ error }))
-
+        authorize().then(res => {
+            if (res.success) {
+                api.post('points', {
+                    type: result ? 'RETURN' : 'ENTRY'
+                }).then((res) => {
+                    alert('Ponto de entrada registrado!')
+                    setPoints([])
+                }).catch(error => console.log({ error }))
+            }
+        }).catch(err => console.log({ err }))
     }
 
     return loading ? (
