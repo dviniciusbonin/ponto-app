@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
+import i18n from "../../config/locale";
 import { useAUth } from "../../contexts/AuthContext";
 import SvgComponent from "../Logo";
 
@@ -28,7 +29,7 @@ export function LoginForm({ onSubmit, onRegister }) {
 
   const handleLogin = async () => {
     if (email.length < 1 || password.length < 1) {
-      alert('Todos os campos são obrigatórios!')
+      alert(i18n.t('signinRequireField'))
       setLoading(false);
     } else {
       setLoading(true);
@@ -36,7 +37,7 @@ export function LoginForm({ onSubmit, onRegister }) {
         setEmail('');
         setPassword('');
       }).catch(err => {
-        alert(err.message);
+        alert(i18n.t('signinError'));
         setPassword('')
       }).finally(() => {
         setLoading(false);
@@ -49,13 +50,13 @@ export function LoginForm({ onSubmit, onRegister }) {
         <SvgComponent />
       </View>
       <View style={styles.formContainer}>
-        <TextInput style={styles.input} placeholder="Login" onChange={(e) => setEmail(e.nativeEvent.text)} value={email}/>
-        <TextInput style={styles.input} placeholder="Senha" onChange={(e) => setPassword(e.nativeEvent.text)} value={password} secureTextEntry />
+        <TextInput style={styles.input} placeholder="Email" onChange={(e) => setEmail(e.nativeEvent.text)} value={email}/>
+        <TextInput style={styles.input} placeholder={i18n.t('password')} onChange={(e) => setPassword(e.nativeEvent.text)} value={password} secureTextEntry />
         <TouchableOpacity style={styles.submit} onPress={handleLogin}>
-          <Text style={styles.submitText}>{!loading ? 'Entrar' : 'Entrando ...'}</Text>
+          <Text style={styles.submitText}>{!loading ? i18n.t('signin') : `${i18n.t('entering')} ...`}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => onRegister()}>
-          <Text style={styles.textRegister}>Sou novo aqui ?</Text>
+          <Text style={styles.textRegister}>{i18n.t('registerUserLink')}</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
