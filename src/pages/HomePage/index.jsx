@@ -3,58 +3,73 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import { CustomButton } from '../../components/CustomButton';
 import { PointItem } from '../../components/PointItem';
-import { formatCurrentDay, formatDate, formatDateTime} from '../../helpers/date';
+import i18n from "../../config/locale";
+import { useAUth } from "../../contexts/AuthContext";
+import { formatCurrentDay, formatDate, formatDateTime } from '../../helpers/date';
 import { formatPointType } from "../../helpers/point.dictionary";
+import useBiometricAuth from "../../hooks/useBiometricAuth";
 import api from "../../services/api";
 export function HomePage() {
-
+    const { logout } = useAUth();
+    const { authorize } = useBiometricAuth();
     const today = new Date();
     const [points, setPoints] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const date = formatDateTime(new Date());
-        api.get(`points?date=${date}`).then(({ data }) => setPoints(data)).finally(() => setLoading(false))
+        api.get(`points?date=${date}`).then(({ data }) => setPoints(data)).catch(err => {
+            if (err.response.status === 401) {
+                logout()
+            }
+        }).finally(() => setLoading(false))
     }, [points]);
 
     useEffect(() => {
         return () => {
-          setPoints([]);
+            setPoints([]);
         };
     }, []);
 
     const handleExitPoint = async () => {
-        if(points.length == 4)
-            return alert('Já foi registrado o máximo de entradas e saídas possíveis!')
+        if (points.length == 4)
+            return alert(i18n.t('validatePointsMsg'))
 
         const result = points.find(point => point.type == 'RETURN');
 
-        api.post('points', {
-            type: result ? 'EXIT' : 'INTERVAL'
-        }).then((res) => {
-            alert('Ponto de saída registrado!')
-           setPoints([])
-        }).catch(error => console.log({error}))
+        authorize().then((res) => {
+            if (res.success) {
+                api.post('points', {
+                    type: result ? 'EXIT' : 'INTERVAL'
+                }).then((res) => {
+                    alert(i18n.t('registeredExitPoint'))
+                    setPoints([])
+                }).catch(error => console.log({ error }))
+            }
+        })
+
     }
 
-    const handleEntryPoint = () => {
-        if(points.length == 4)
-            return alert('Já foi registrado o máximo de entradas e saídas possíveis!')
+    const handleEntryPoint = async () => {
+        if (points.length == 4)
+            return alert(i18n.t('validatePointsMsg'))
 
         const result = points.find(point => point.type == 'INTERVAL');
-
-        api.post('points', {
-            type: result ? 'RETURN' : 'ENTRY'
-        }).then((res) => {
-            alert('Ponto de entrada registrado!')
-            setPoints([])
-        }).catch(error => console.log({error}))
-
+        authorize().then(res => {
+            if (res.success) {
+                api.post('points', {
+                    type: result ? 'RETURN' : 'ENTRY'
+                }).then((res) => {
+                    alert(i18n.t('registeredEntryPoint'))
+                    setPoints([])
+                }).catch(error => console.log({ error }))
+            }
+        }).catch(err => console.log({ err }))
     }
 
     return loading ? (
         <View style={styles.container}>
-            <Text>Carregando ...</Text>
+            <Text>{i18n.t('loading')} ...</Text>
         </View>
     ) : (
         <View style={styles.container}>
@@ -88,7 +103,7 @@ export function HomePage() {
                         : points.map(point => {
                             const date = moment.tz(point.created_at, "America/Sao_Paulo");
                             return <PointItem key={point.id} item={{
-                                created_at: `${date.hours() + 3}:${date.minutes()}`,
+                                created_at: `${date.hours() + 3}:${date.minutes() < 10 ? `0${date.minutes()}` : date.minutes()}`,
                                 type: formatPointType(point.type)
                             }} />
                         })
@@ -97,8 +112,8 @@ export function HomePage() {
             </View>
 
             <View style={styles.buttons}>
-                <CustomButton title='Entrar' color='#2AA855' action={handleEntryPoint} />
-                <CustomButton title='Sair' color='#FF5757' action={handleExitPoint} />
+                <CustomButton title={i18n.t('enterToWork')} color='#2AA855' action={handleEntryPoint} />
+                <CustomButton title={i18n.t('leaveWork')} color='#FF5757' action={handleExitPoint} />
             </View>
         </View>
     )
@@ -113,7 +128,8 @@ const styles = StyleSheet.create({
     },
     main: {
         width: '100%',
-        flex: 1
+        minHeight: "60%",
+        flex: 0
     },
     title: {
         textAlign: 'center',

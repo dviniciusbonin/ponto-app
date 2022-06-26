@@ -4,6 +4,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
+import i18n from "./config/locale";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from "@react-navigation/native";
 import SvgComponent from "./components/Logo";
@@ -19,7 +20,7 @@ function CustomDrawerContent(props) {
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
       <DrawerItem
-        label="Sair"
+        label={i18n.t('logout')}
         onPress={() => logout()}
       />
     </DrawerContentScrollView>
@@ -51,14 +52,14 @@ export default function Routes() {
         >
           <Drawer.Screen
             options={{
-              title: "Registrar ponto",
+              title: i18n.t('registerPoint')
             }}
             name="Home"
             component={HomePage}
           />
           <Drawer.Screen
           options={{
-              title: "Histórico de pontos"
+              title: i18n.t('pointsHistory')
           }}
             name="listPoints"
             component={WorkingDaysPage}
