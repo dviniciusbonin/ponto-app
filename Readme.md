@@ -81,4 +81,8 @@ com o endereço da api
 ```env
  BASE_URL_API=https://example.com
 ```
+
+<img src="https://github.com/dviniciusbonin/ponto-app/blob/main/assets/picture1.png?raw=true" height="660">
+
+<img src="https://github.com/dviniciusbonin/ponto-app/blob/main/assets/picture2.png?raw=true" height="660">
     
